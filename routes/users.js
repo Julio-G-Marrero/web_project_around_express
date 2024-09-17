@@ -1,27 +1,15 @@
 const routerUser = require('express').Router();
-const User = require('../data/users');
+const {getUsers , getUserById,creteUser,updateUserName ,updateUserAvatar} = require('../controllers/users')
 
-routerUser.get('/',(req,res) => {
-  User.find({})
-  .then(users => res.send({ data: users }))
-  .catch(() => res.status(500).send({ message: 'Error' }));
-})
+routerUser.get('/',getUsers)
 
-routerUser.get('/:id', (req, res) => {
-  const { id } = req.params;
-  let user = User.find(user => user._id == id)
-  if (!user) {
-    res.send({ error: `Este usuario no existe` });
-    return;
-  }
-  res.send(user);
-});
+routerUser.get('/:id',getUserById);
 
-routerUser.post('/',(req,res) => {
-  const { name,about,avatar } = req.body;
+routerUser.post('/',creteUser)
 
-  User.create({name,about,avatar})
-  .then(user => res.send({ data: user }))
-  .catch(() => res.status(500).send({ message: 'Error' }));
-})
+routerUser.patch('/me',updateUserName)
+
+routerUser.patch('/me/avatar',updateUserAvatar)
+
+
 module.exports = routerUser;

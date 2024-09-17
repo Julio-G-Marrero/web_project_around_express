@@ -8,8 +8,17 @@ const routerCards = require('./routes/cards')
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  req.user = {
+    _id: '66e9b0bdcb0399d938348ea8' // pega el _id del usuario de prueba que creamos en el paso anterior
+  };
 
-mongoose.connect('mongodb://localhost:27017/aroundb');
+  next();
+});
+mongoose.connect('mongodb://localhost:27017/aroundb',{
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const { PORT = 3000 } = process.env;
 
