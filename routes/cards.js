@@ -1,7 +1,9 @@
 const routerCards = require('express').Router();
-const { cards } = require('../data/cards');
+const  Card  = require('../data/cards');
 
 routerCards.get('/',(req,res) => {
-  res.send(cards)
+  Card.find({})
+  .then(cards => res.send({ data: cards }))
+  .catch(() => res.status(500).send({ message: 'Error' }));
 })
 module.exports = routerCards;
