@@ -1,5 +1,9 @@
 const Card = require('../models/cards')
 
+const doesRouteExistMiddelware = (req,res,next) => {
+  console.log(req)
+}
+
 module.exports.getCards = (req,res) => {
   Card.find({})
   .then(cards => res.send({ data: cards }))

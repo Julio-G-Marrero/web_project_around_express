@@ -22,10 +22,12 @@ mongoose.connect('mongodb://localhost:27017/aroundb',{
 
 const { PORT = 3000 } = process.env;
 
-
 app.listen(PORT, () => {
   console.log(`App listening at port ${PORT}`);
 })
 
 app.use('/users',routerUsers)
 app.use('/cards',routerCards)
+app.use((req, res, next) => {
+  res.send({ error: "Ruta no definida" })
+});
